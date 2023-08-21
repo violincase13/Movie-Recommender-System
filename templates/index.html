@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Movie Recommender System</title>
+        <meta charset="UTF-8">
+        <meta name="description" content="">
+        <meta name="keywords" content="">
+        <meta name="author" content="">
+        <link rel="profile" href="#">
+    
+        <!--Google Font-->
+        <link rel="stylesheet" href='http://fonts.googleapis.com/css?family=Dosis:400,700,500|Nunito:300,400,600' />
+        <!-- Mobile specific meta -->
+        <meta name=viewport content="width=device-width, initial-scale=1">
+        <meta name="format-detection" content="telephone-no">
+    
+        <!-- CSS files -->
+        <link rel="stylesheet" href="../static/css/plugins.css">
+        <link rel="stylesheet" href="../static/css/style.css">
+        <link rel="stylesheet" href="../static/css/moviecards.css">
+        <link rel="stylesheet" href="../static/css/bootstrap.min.css">       
+    </head>
+
+   <!-- header section-->
+   <header class="ht-header slider movie-items">
+    <div class="container">
+        <div class="my-logo" style="text-align: center;">
+            <a href="../static/templates/index.html">
+                <img src="../static/images/logo1.png" alt="" width="200" height="200">
+            </a>
+        </div>        
+        <div class="disclaimer">
+            <div class="container">
+                <p>Disclaimer: In order to run the system properly, please provide a valid/public IMDB Profile url.</p>
+            </div>
+        </div>
+       
+        <!-- top search form -->
+        <form action="/showprediction" method="post">
+            <div class="top-search">
+                <select data-live-search="true" name="ml_algorithms">
+                    <option value="pearson">Pearson Correlation</option>
+                    <option value="kmean">K-mean</option>
+                </select>
+                <input type="url" name="ratings-url" id="ratings-url" required="required" placeholder="Please, place your link here">
+                <button type="submit" class="redbtn">Submit</button>               
+            </div>
+        </form>
+    </div>        
+</header>
+<!-- end of header section-->    
+
+<!-- body section-->
+<body>
+    <div class="movie-items">
+        <div class="container">
+        {% if results|length > 1 %}
+
+        <div class="movie-content">
+            {% for score, imdbID in results.items() if not results.hidden%}
+              <div class="moviecard card" style="width: 24rem;" data-toggle="modal" data-target="{{ movie_posters[imdbID] }}">
+                <div class="imghvr">
+                    <img class="card-img-top movie-img" id="{{ movie_posters[imdbID] }}" height="360" width="240" alt="" src="{{ movie_posters[imdbID] }}">
+                  <figcaption class="fig">
+                    <button class="card-btn btn btn-danger">
+                        <a href="https://www.imdb.com/title/tt{{ imdbID }}/">
+                            Find More
+                        </a> 
+                    </button>
+                  </figcaption>
+                </div>
+                <div class="card-body" style="font-family: 'Rowdies', cursive;font-size: 18px;">
+                    <h6><a href="https://www.imdb.com/title/tt{{ imdbID }}/">{{ movie_names[imdbID] }}</a></h6>
+                    <h5 class="card-title" style="font-size: 18px"><span>{{ movie_genres[imdbID] }}</span></h5>
+                    <p><i class="ion-android-star"></i><span>{{ score }}</span> /5</p>                    
+                </div>
+              </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+    </div>
+</body>
+<!-- end of body section-->
+
+<!-- footer section-->
+<footer class="ht-footer">
+    <div class="container">
+        <div class="flex-parent-ft">
+            <div class="flex-child-ft item1">
+                <a href="../static/templates/index.html"><img class="logo" src="../static/images/logo1.png" alt="" width="160" height="160"></a>
+            </div>
+            <div class="flex-child-ft item2">
+            </div>
+            <div class="flex-child-ft item3">
+            </div>
+            <div class="flex-child-ft item4">
+            </div>
+            <div class="flex-child-ft item5">
+                <h4>Movie Recommender System</h4>
+                <ul>
+                    <li><p>Flavia Barbu</p></li> 
+                    <li><p>Claudia Dumitrescu</p></li> 
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="ft-copyright">
+        <div class="ft-left">
+            <p>Made with <i class="ion-ios-heart"></i></p>
+        </div>
+        <div class="backtotop">
+            <p><a href="#" id="back-to-top">Back to top <i class="ion-ios-arrow-thin-up"></i></a></p>
+        </div>
+    </div>
+</footer>
+<!-- end of footer section-->   
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
+</script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+</script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+    integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous">
+</script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script src="../static/js/jquery.js"></script>
+
+<script src="../static/js/plugins2.js"></script>
+<script src="../static/js/custom.js"></script>
+
+</html>
+
